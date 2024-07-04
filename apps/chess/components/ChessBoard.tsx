@@ -2,9 +2,9 @@
 
 import { Chess, Color, PieceSymbol, Square } from "chess.js"; // Import necessary types from chess.js
 import { useState } from "react"; // Import useState hook from React
-import { GAME_OVER, MOVE } from "../app/game/page"; // Import constants for game events
 
-export const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
+
+const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
     chess: Chess;
     setBoard: React.Dispatch<React.SetStateAction<({
         square: Square;
@@ -21,25 +21,19 @@ export const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
 }) => {
     const [from, setFrom] = useState<null | Square>(null); // State to track the selected piece
     const [possibleMoves, setPossibleMoves] = useState<Square[]>([]); // State to track possible moves for the selected piece
+    const INIT_GAME = "init_game";
+    const MOVE = "move";
+    const GAME_OVER = "game_over";
+    let moveSound: HTMLAudioElement, captureSound: HTMLAudioElement, illegalSound: HTMLAudioElement, castleSound: HTMLAudioElement, checkSound: HTMLAudioElement, drawSound;
 
-    // Initialize sound effects
-    const notifySound = new Audio('/audio/notify.mp3');
-    notifySound.preload='auto'
-    const game_end=new Audio('/audio/game-end.mp3')
-    game_end.preload='auto'
-    const moveSound = new Audio('/audio/move-self.mp3');
-    moveSound.preload='auto'
-    const captureSound = new Audio('/audio/capture.mp3');
-    captureSound.preload='auto'
-    const illegalSound = new Audio('/audio/illegal.mp3');
-    illegalSound.preload='auto'
-    
-    const castleSound = new Audio('/audio/castle.mp3');
-    castleSound.preload='auto'
-    const checkSound = new Audio('/audio/move-check.mp3');
-    checkSound.preload='auto'
-    const drawSound = new Audio('/audio/draw.mp3');
-    drawSound.preload='auto'
+    if (typeof window !== 'undefined') {
+        moveSound = new Audio('/audio/move-self.mp3');
+        captureSound = new Audio('/audio/capture.mp3');
+        illegalSound = new Audio('/audio/illegal.mp3');
+        castleSound = new Audio('/audio/castle.mp3');
+        checkSound = new Audio('/audio/move-check.mp3');
+        drawSound = new Audio('/audio/draw.mp3');
+    }
 
     // Function to get the square representation based on player color
     const getSquareRepresentation = (i: number, j: number) => {
@@ -56,17 +50,17 @@ export const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
         playerColor === "b" ? [...row].reverse() : row;
 
     // Function to play sound effects based on the move
-    const playSound = (move: string) => {
-        if (chess.inCheck()) {
-            checkSound.play();
-        } else if (move.includes('x')) {
-            captureSound.play();
-        } else if (move.includes('O-O') || move.includes('O-O-O')) {
-            castleSound.play();
-        } else {
-            moveSound.play();
-        }
-    };
+    // const playSound = (move: string) => {
+    //     if (chess.inCheck()) {
+    //         checkSound.play();
+    //     } else if (move.includes('x')) {
+    //         captureSound.play();
+    //     } else if (move.includes('O-O') || move.includes('O-O-O')) {
+    //         castleSound.play();
+    //     } else {
+    //         moveSound.play();
+    //     }
+    // };
 
     // Handle click on a square
     const handleClick = (squareRepresentation: Square) => {
@@ -103,7 +97,21 @@ export const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
         const moveResult = chess.move(move); // Attempt the move
          
           if (moveResult) {
-              playSound(moveResult.san); // Play sound based on move
+              // playSound(moveResult.san); // Play sound based on move
+              if (typeof window !== 'undefined') {
+                if (chess.inCheck()) {
+                    checkSound?.play();
+                } else if (moveResult.san.includes('x')) {
+                    captureSound?.play();
+                } else if (moveResult.san.includes('O-O') || moveResult.san.includes('O-O-O')) {
+                    castleSound?.play();
+                } else {
+                    
+                    moveSound?.play();
+                    console.log("move sound played");
+                    
+                }
+              }
               socket.send(
                 JSON.stringify({
                   type: MOVE,
@@ -130,7 +138,9 @@ export const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
             }
               
           } else {
-            illegalSound.play()
+            if (typeof window !== 'undefined') {
+              illegalSound?.play();
+            }
             console.log('Invalid move'); // Log invalid move
           }
       }
@@ -175,3 +185,5 @@ export const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
       </div>
     );
 };
+
+export default ChessBoard

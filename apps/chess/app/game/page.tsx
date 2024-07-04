@@ -2,22 +2,26 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "../../components/Button"
-import { ChessBoard } from "../../components/ChessBoard"
+const ChessBoard = dynamic(() => import('../../components/ChessBoard'), {
+    ssr: false,
+});
 import { useSocket } from "../../hooks/useSocket";
 import { Chess } from 'chess.js'
 import { useSession } from "next-auth/react";
 import { AppBar } from "../../components/AppBar";
 import axios from "axios";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
 
-
-export const INIT_GAME = "init_game";
-export const MOVE = "move";
-export const GAME_OVER = "game_over";
 
 export default function ()
 
 {
+    
+    const INIT_GAME = "init_game";
+    const MOVE = "move";
+    const GAME_OVER = "game_over";
+
     const session = useSession();
     const user = session.data?.user;
 
@@ -31,23 +35,18 @@ export default function ()
     const [username, setUsername] = useState("")
     let [opponentName,setopponentName]=useState("opponent")
   
-    const notifySound = new Audio('/audio/notify.mp3');
-    notifySound.preload='auto'
-    const game_end=new Audio('/audio/game-end.mp3')
-    game_end.preload='auto'
-    const moveSound = new Audio('/audio/move-self.mp3');
-    moveSound.preload='auto'
-    const captureSound = new Audio('/audio/capture.mp3');
-    captureSound.preload='auto'
-    const illegalSound = new Audio('/audio/illegal.mp3');
-    illegalSound.preload='auto'
-    
-    const castleSound = new Audio('/audio/castle.mp3');
-    castleSound.preload='auto'
-    const checkSound = new Audio('/audio/move-check.mp3');
-    checkSound.preload='auto'
-    const drawSound = new Audio('/audio/draw.mp3');
-    drawSound.preload='auto'
+    let moveSound: HTMLAudioElement, captureSound: HTMLAudioElement, illegalSound: HTMLAudioElement, castleSound: HTMLAudioElement, checkSound: HTMLAudioElement, drawSound: HTMLAudioElement,notifySound: HTMLAudioElement,gameendSound:HTMLAudioElement;
+
+    if (typeof window !== 'undefined') {
+        notifySound=new Audio('/audio/notify.mp3')
+        gameendSound=new Audio('/audio/game-end.mp3')
+        moveSound = new Audio('/audio/move-self.mp3');
+        captureSound = new Audio('/audio/capture.mp3');
+        illegalSound = new Audio('/audio/illegal.mp3');
+        castleSound = new Audio('/audio/castle.mp3');
+        checkSound = new Audio('/audio/move-check.mp3');
+        drawSound = new Audio('/audio/draw.mp3');
+    }
 
     // if (!user) {
     //     redirect("/signup");
@@ -75,7 +74,9 @@ useEffect(() => {
         switch (message.type) {
             case INIT_GAME:
 
-                notifySound.play()
+            if (typeof window !== 'undefined') {
+                notifySound?.play();
+              }
                
                 console.log(username);
                 
@@ -112,16 +113,20 @@ useEffect(() => {
                 setBoard(chess.board());
                 console.log("Move made");
 
-                if (chess.inCheck()) {
-                    checkSound.play();
-                } else if (moveResult.san.includes('x')) {
-                    captureSound.play();
-                } else if (moveResult.san.includes('O-O') || moveResult.san.includes('O-O-O')) {
-                    castleSound.play();
-                } else {
-                    moveSound.play();
+                if (typeof window !== 'undefined') {
+                    if (chess.inCheck()) {
+                        checkSound?.play();
+                    } else if (moveResult.san.includes('x')) {
+                        captureSound?.play();
+                    } else if (moveResult.san.includes('O-O') || moveResult.san.includes('O-O-O')) {
+                        castleSound?.play();
+                    } else {
+                        
+                        moveSound?.play();
+                        console.log("move sound played");
+                        
+                    }
                 }
-
             
                 // Check for game over
                 if (chess.isGameOver() || chess.isDraw()) {
@@ -135,15 +140,20 @@ useEffect(() => {
                     console.log("Draw by insufficient material or threefold repetition");
                 }
                 break;
+
             case GAME_OVER:
                 
                 const winner = message.payload.winner;
                 if(winner==="draw"){
                     setGameOverMessage("Draw by insufficient material or threefold repetition.");
-                    drawSound.play()
+                    if (typeof window !== 'undefined') {
+                        drawSound?.play();
+                      }
                     break
                 }
-                game_end.play()
+                if (typeof window !== 'undefined') {
+                    gameendSound?.play()    
+                }
                 setGameOverMessage(`Game Over! Winner: ${winner}`);
             
                 break;
