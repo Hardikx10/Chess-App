@@ -10,8 +10,8 @@ import { Chess } from 'chess.js'
 import { useSession } from "next-auth/react";
 import { AppBar } from "../../components/AppBar";
 import axios from "axios";
-import { redirect } from "next/navigation";
 import dynamic from "next/dynamic";
+import { redirect } from "next/navigation";
 
 
 export default function ()
@@ -48,10 +48,10 @@ export default function ()
         drawSound = new Audio('/audio/draw.mp3');
     }
 
-    // if (!user) {
-    //     redirect("/signup");
+    if (!user) {
+        redirect("/signup");
         
-    // }
+    }
     const fetchData = async () => {
         try {
                 const response = await axios.get('/api/user');
