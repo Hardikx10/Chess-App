@@ -57,7 +57,6 @@ export default function ()
                 const response = await axios.get('/api/user');
                 setUsername(response.data.username)
               
-                
         } catch (error) {
                 console.error("Error fetching data:", error);
         }
