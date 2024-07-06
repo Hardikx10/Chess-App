@@ -48,10 +48,10 @@ export default function ()
         drawSound = new Audio('/audio/draw.mp3');
     }
 
-    if (!user) {
-        redirect("/signup");
+    // if (!user) {
+    //     redirect("/signup");
         
-    }
+    // }
     const fetchData = async () => {
         try {
                 const response = await axios.get('/api/user');
