@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 
-const WS_URL = "ws://chess-backend-wss-7b8fcb9811da.herokuapp.com/";
+const WS_URL = "wss://chess-backend-wss-7b8fcb9811da.herokuapp.com/";
 
 export const useSocket = () => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
