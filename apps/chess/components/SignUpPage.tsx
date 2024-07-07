@@ -96,12 +96,12 @@ const SignUpPage = () => {
 
 
 
-        <div className="flex items-center w-full max-w-sm mb-4 mt-2">
+        {/* <div className="flex items-center w-full max-w-sm mb-4 mt-2">
           <div className="border-t border-gray-500 flex-grow"></div>
           <span className="mx-2">OR</span>
           <div className="border-t border-gray-500 flex-grow"></div>
-        </div>
-        <button onClick={
+        </div> */}
+        {/* <button onClick={
          async()=>{
             const result=await signIn("google")
             console.log(result);
@@ -127,7 +127,7 @@ const SignUpPage = () => {
         }} className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded w-full max-w-sm flex items-center justify-center">
           <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.304 3.438 9.8 8.207 11.387.6.111.82-.261.82-.577 0-.285-.01-1.04-.015-2.04-3.338.727-4.042-1.608-4.042-1.608-.546-1.385-1.333-1.754-1.333-1.754-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.234 1.838 1.234 1.07 1.834 2.809 1.304 3.495.998.108-.775.418-1.304.76-1.604-2.665-.307-5.466-1.332-5.466-5.932 0-1.31.467-2.381 1.235-3.221-.124-.303-.536-1.524.117-3.176 0 0 1.01-.322 3.31 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.292-1.552 3.298-1.23 3.298-1.23.655 1.653.243 2.874.12 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.62-5.479 5.92.43.37.813 1.096.813 2.21 0 1.595-.014 2.882-.014 3.276 0 .32.216.694.824.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           Continue with GitHub
-        </button>
+        </button> */}
       </div>
     </div>
     )
