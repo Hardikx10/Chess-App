@@ -181,7 +181,7 @@ if (!socket) return <div>Connecting...</div>
 return (   <div className="justify-center w-full h-screen bg-slate-800 flex">
     <div className="pt-8 max-w-screen-lg w-full">
         <AppBar />
-        <div className="mt-1 text-white text-xl text-center sm:text-left">
+        <div className="mt-1 text-white text-xl  sm:text-left">
             {opponentName}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 w-full">
@@ -231,7 +231,7 @@ return (   <div className="justify-center w-full h-screen bg-slate-800 flex">
        
        
             
-        <div className="mt-2 text-white text-xl text-center sm:text-left">
+        <div className="mt-2 text-white text-xl sm:text-left">
             
             {username}
             

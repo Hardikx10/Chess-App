@@ -159,7 +159,7 @@ const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
                   <div
                       onClick={() => handleClick(squareRepresentation)} // Handle square click
                       key={j}
-                      className={`relative w-16 h-16 ${(i + j) % 2 === 0 ? "bg-slate-50" : "bg-green-600"}`} // Alternate square colors
+                      className={`relative w-12 h-12 lg:w-16 lg:h-16 ${(i + j) % 2 === 0 ? "bg-slate-50" : "bg-green-600"}`} // Alternate square colors
                   >
                       <div className="w-full justify-center flex h-full">
                           <div className="h-full justify-center flex flex-col">
