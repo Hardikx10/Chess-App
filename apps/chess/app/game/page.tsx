@@ -71,6 +71,11 @@ useEffect(() => {
         const message = JSON.parse(event.data);
 
         switch (message.type) {
+
+            case 'keep-alive':
+                console.log("keep alive");
+                break
+                
             case INIT_GAME:
 
             if (typeof window !== 'undefined') {
