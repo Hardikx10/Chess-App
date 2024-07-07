@@ -187,3 +187,4 @@ const ChessBoard = ({ chess, board, socket, setBoard, playerColor}: {
 };
 
 export default ChessBoard
+

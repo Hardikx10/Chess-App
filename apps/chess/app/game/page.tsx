@@ -178,22 +178,17 @@ const handleNewGame = () => {
 
 if (!socket) return <div>Connecting...</div>
 
-return (<div className="justify-center w-full h-screen bg-slate-800 flex">
-    
+return (   <div className="justify-center w-full h-screen bg-slate-800 flex">
     <div className="pt-8 max-w-screen-lg w-full">
-        <AppBar/> 
-        <div className="mt-1 text-white text-xl">
-            
-               {opponentName}               
-               
+        <AppBar />
+        <div className="mt-1 text-white text-xl text-center sm:text-left">
+            {opponentName}
         </div>
-        <div className="grid grid-cols-6 gap-4 w-full">
-            <div className="col-span-4 mt-5 w-full flex justify-center">
-            
-                <ChessBoard chess={chess} setBoard={setBoard} socket={socket} board={board} playerColor={playerColor}  />
-
+        <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 w-full">
+            <div className="col-span-1 sm:col-span-4 mt-5 w-full flex justify-center">
+                <ChessBoard chess={chess} setBoard={setBoard} socket={socket} board={board} playerColor={playerColor} />
             </div>
-            <div className="col-span-2 mt-5 bg-slate-900 w-full flex justify-center">
+            <div className="col-span-1 sm:col-span-2 mt-5 bg-slate-900 w-full flex justify-center">
                 <div className="pt-8 text-white">
                 {started ? (
                             gameOverMessage ? (
@@ -236,7 +231,7 @@ return (<div className="justify-center w-full h-screen bg-slate-800 flex">
        
        
             
-        <div className="mt-2 text-white text-xl">
+        <div className="mt-2 text-white text-xl text-center sm:text-left">
             
             {username}
             
@@ -248,3 +243,5 @@ return (<div className="justify-center w-full h-screen bg-slate-800 flex">
 
 </div>)
 }
+
+
