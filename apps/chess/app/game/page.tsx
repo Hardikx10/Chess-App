@@ -232,9 +232,6 @@ return (   <div className="justify-center w-full h-screen bg-slate-800 flex">
             </div>
            
         </div>
-        
-       
-       
             
         <div className="mt-2 text-white text-xl sm:text-left">
             
