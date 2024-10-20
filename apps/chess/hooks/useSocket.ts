@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 
-const WS_URL = "ws://chess-game-backend-bzde.onrender.com";
+const WS_URL = "wss://chess-game-backend-bzde.onrender.com";
 
 export const useSocket = () => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
